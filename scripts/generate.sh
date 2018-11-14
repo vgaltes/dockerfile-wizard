@@ -134,9 +134,17 @@ RUN apt-get -y install libgconf-2-4 \
 fi
 
 echo "# install Azure CLI
-RUN apt-get install lsb-release \
-  && AZ_REPO=$(lsb_release -cs) \
-  && echo 'deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main' | tee /etc/apt/sources.list.d/azure-cli.list \
+RRUN apt-get update \
+  && apt-get install apt-transport-https -y \
+  && echo 'deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ xenial main' | tee /etc/apt/sources.list.d/azure-cli.list \
+  && apt-get install curl -y \
   && curl -L https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
   && apt-get update \
-  && pt-get install libssl-dev libffi-dev python-dev apt-transport-https azure-cli"
+  && apt-get install libssl-dev libffi-dev python-dev apt-transport-https azure-cli -y"
+
+echo "#Azure Functions core tools
+RUN apt-get install wget \
+  && wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb \
+  && dpkg -i packages-microsoft-prod.deb \
+  && apt-get update \
+  && apt-get install azure-functions-core-tools -y"
