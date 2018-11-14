@@ -60,8 +60,6 @@ jobs:
             sudo apt-get update
             sudo apt-get install libssl-dev libffi-dev python-dev apt-transport-https azure-cli
 
-      - run: 
-
       - store_artifacts:
           path: Dockerfile
 
