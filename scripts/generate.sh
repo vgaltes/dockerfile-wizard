@@ -132,3 +132,11 @@ RUN apt-get -y install libgconf-2-4 \
   && mv chromedriver /usr/local/bin/chromedriver \
   && chmod +x /usr/local/bin/chromedriver"
 fi
+
+echo "# install Azure CLI
+RUN apt-get install lsb-release \
+  && AZ_REPO=$(lsb_release -cs) \
+  && echo 'deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main' | sudo tee /etc/apt/sources.list.d/azure-cli.list \
+  && curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add - \
+  && apt-get update
+  && pt-get install libssl-dev libffi-dev python-dev apt-transport-https azure-cli"
