@@ -54,17 +54,12 @@ jobs:
 
   test_image:
     docker:
-      - image: $DOCKER_USERNAME/azurefunctionsbuildanddeploy:1
+      - image: $DOCKER_USERNAME/azurefunctionsbuildanddeploy:1.0
         environment:
           <<: *image_config
 
     steps:
       - checkout
-
-      # - run:
-      #     name: start Xvfb for phantomjs test
-          # command: Xvfb :99
-          # background: true
 
       - run:
           name: bats tests
@@ -84,10 +79,10 @@ workflows:
   version: 2
   dockerfile_wizard:
     jobs:
-      # - build:
-      #     context: org-global
+      - build:
+          context: org-global
 
       - test_image:
           context: org-global
-          # requires:
-          #   - build
+          requires:
+            - build
